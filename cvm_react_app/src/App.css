@@ -1,11 +1,11 @@
 body {
-  background-color: linear-gradient(292.24deg, rgba(217, 223, 248, 0.24) -1.41%, rgba(161, 177, 234, 0.714126) 17.71%, #204988 53.42%);
+  background-color: linear-gradient(222.0deg, rgba(217, 223, 248, 0.24) -1.41%, rgba(161, 177, 234, 0.714126) 7.71%, #204988 23.42%);
 }
 
 .titleLabel {
   position: absolute;
-  width: 382px;
-  height: 107px;
+  width: 252px;
+  height: 87px;
   left: -16px;
   top: -21px;
 
@@ -15,11 +15,12 @@ body {
 }
 
 .titleP {
-  margin-left: 35px;;
+  margin-left: 35px;
+  margin-top: 30px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 42px;
 
   color: #FFFBFB;
