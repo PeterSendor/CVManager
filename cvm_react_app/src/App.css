@@ -25,3 +25,25 @@ body {
 
   color: #FFFBFB;
 }
+
+.loginBox {
+  position: absolute;
+  width: 420px;
+  height: 300px;
+  left: 800px;
+  top: 74px;
+  opacity: 100%;
+  background: #2f508d;
+  border-radius: 27px;
+}
+
+.activeLoginButton {
+  height: 40px;
+  border-radius: 10px;
+  color: red
+}
+
+.loginButtonCustomisation {
+  border-radius: 10px;
+  width: 150px;
+}
