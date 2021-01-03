@@ -26,10 +26,20 @@ body {
   color: #FFFBFB;
 }
 
-.loginBox {
+.loginBox_signin {
   position: absolute;
   width: 420px;
-  height: 300px;
+  height: 250px;
+  left: 800px;
+  top: 74px;
+  opacity: 100%;
+  background: #2f508d;
+  border-radius: 27px;
+}
+.loginBox_register {
+  position: absolute;
+  width: 420px;
+  height: 360px;
   left: 800px;
   top: 74px;
   opacity: 100%;
@@ -44,6 +54,26 @@ body {
 }
 
 .loginButtonCustomisation {
-  border-radius: 10px;
-  width: 150px;
+  
+  color:white;
+}
+.login_password_group {
+  position: relative; 
+  left: 430px;
+  top: 140px;
+}
+.login_password_register_group {
+  position: relative; 
+  left: 430px;
+  top: 130px;
+}
+.sign_in_button_signin {
+  position: relative; 
+  top: 175px;
+  left: 735px;
+}
+.sign_in_button_register {
+  position: relative; 
+  top: 165px;
+  left: 735px;
 }

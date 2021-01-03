@@ -4,10 +4,31 @@ import Container from '@material-ui/core/Container';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 
+const inputStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      color: '#d41274', 
+      
+    },
+    textField: {
+      marginLeft: theme.spacing(4),
+      marginRight: theme.spacing(0),
+      marginTop: theme.spacing(1),
+      width: '35ch', 
+      background: '#fff', 
+      borderRadius: 6,
+      
+    },
+  }),
+);
 const loginButtonStyle = theme => ({
   root: {
     position: 'absolute',
@@ -24,7 +45,6 @@ const loginButtonStyle = theme => ({
     textTransform: 'capitalize',
   },
 });
-
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -36,35 +56,46 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
   },
-    Typography: {
-      button: {
-        color: '#d41574'
-      }
-    ,
     contrastThreshold: 3,
     tonalOffset: 0.2,
-   
-  },
 });
+theme.overrides = {
+  ...theme.overrides,
+  MuiButton: {
+      label: {
+        ...theme.label,
+        color:theme.palette.primary.contrastText,
+      }
+  },
+}
 
 function LoginBox (props) {
   const loginButtonsStyle = {}; 
+  const classes = inputStyles();
+  const loginBoxStyle = {
+    1: "loginBox_signin", 
+    0: "loginBox_register"
+  };
 
   if (props.buttonSelector === 1) {
+
     loginButtonsStyle.button1 = "contained"; 
     loginButtonsStyle.button2 = null;
     loginButtonsStyle.colorButton1 = "primary";  
-    loginButtonsStyle.colorButton2 = "secondary";  
+    loginButtonsStyle.colorButton2 = "secondary"; 
+    
   } else if (props.buttonSelector === 0 ) {
+
     loginButtonsStyle.button1 = null; 
     loginButtonsStyle.button2 = "contained";
     loginButtonsStyle.colorButton1 = "secondary";  
     loginButtonsStyle.colorButton2 = "primary";  
+
   }
 
   return (
     <div 
-      className="loginBox">
+      className={loginBoxStyle[props.buttonSelector]}>
       
       <ButtonGroup 
         aria-label="outlined primary button group"
@@ -90,10 +121,98 @@ function LoginBox (props) {
 
       </ThemeProvider>
       </ButtonGroup>
+
+      
     </div>
   )
 }
+function LoginTextAreas (props) {
+  const classes = inputStyles();
+  const option = props.textAreasSelector; 
 
+  if (option === 1) {
+  return (
+  <div>
+    <div className="login_password_group">
+      <TextField
+        id="loginTextArea"
+        className={classes.textField}
+        variant="filled"
+        label="Please enter your login"
+        margin="dense"
+      />
+      <TextField
+        id="passwordTextArea"
+        className={classes.textField}
+        variant="filled"
+        margin="dense"
+        label="Please enter your password"
+        type="password"   
+      />    
+          
+    </div>
+
+      <ThemeProvider theme={theme}>
+      <Button 
+        variant="contained"
+        color="secondary"
+        className="sign_in_button_signin"
+        >Let's start!
+      </Button>
+      </ThemeProvider>
+  </div>
+  
+)} else if (option === 0) {
+  return (
+    <div>
+      <div className="login_password_register_group">
+      <TextField
+          id="name_surname"
+          className={classes.textField}
+          variant="filled"
+          label="write your name and surname"
+          margin="dense"
+        />
+        <TextField
+          id="newloginTextArea"
+          className={classes.textField}
+          variant="filled"
+          label="write your new login"
+          margin="dense"
+        />
+        <TextField
+          id="newPasswordTextArea"
+          className={classes.textField}
+          variant="filled"
+          margin="dense"
+          label="write your password"
+          type="password"
+        />   
+        <TextField
+          id="newPasswordTextArea"
+          className={classes.textField}
+          variant="filled"
+          margin="dense"
+          label="repeat your password"
+          type="password"
+        />     
+            
+      </div>
+  
+        <ThemeProvider theme={theme}>
+        <Button 
+          variant="contained"
+          color="secondary"
+          className="sign_in_button_register"
+          >Let's start!
+        </Button>
+        </ThemeProvider>
+    </div>
+    
+  )
+}
+
+}
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -102,26 +221,22 @@ class App extends React.Component {
       loginButton: 1
     };
   }
-
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
     })
   }
-
   handleRegisterButton = () => {
     this.setState({
       loginButton: 0
     })
   }
-
   handleLoginButton = () => {
     
     this.setState({
       loginBox: -this.state.loginBox
     })
   }
-
   render () {
     const { classes } = this.props;
     return  (
@@ -136,13 +251,18 @@ class App extends React.Component {
           </p>
         </div>
 
-        { this.state.loginBox === 1 ? null : <LoginBox 
+        { this.state.loginBox === 1 ? null : 
+        <div><LoginBox 
           buttonSelector = {this.state.loginButton}
           onclickButton1 = {this.handleSigninButton}
           onclickButton2 = {this.handleRegisterButton}
-        /> }
-        
-  
+        /> 
+        <LoginTextAreas 
+          textAreasSelector = {this.state.loginButton}
+        />
+        </div>
+        }
+
         <ThemeProvider theme={theme}>
           <Button 
             variant="contained" 
@@ -154,7 +274,7 @@ class App extends React.Component {
             
           </Button>
         </ThemeProvider>
-  
+        
       </Container> 
 
     )
