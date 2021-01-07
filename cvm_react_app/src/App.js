@@ -29,6 +29,25 @@ const inputStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+const inputStyles_name_surname = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      color: '#d41274', 
+      
+    },
+    textField: {
+      marginLeft: theme.spacing(0),
+      marginRight: theme.spacing(1.5),
+      marginTop: theme.spacing(1),
+      width: '35ch', 
+      background: '#fff', 
+      borderRadius: 6,
+      
+    },
+  }),
+);
 const loginButtonStyle = theme => ({
   root: {
     position: 'absolute',
@@ -129,6 +148,7 @@ function LoginBox (props) {
 function LoginTextAreas (props) {
   const classes = inputStyles();
   const option = props.textAreasSelector; 
+  const classes2 = inputStyles_name_surname();
 
   if (option === 1) {
   return (
@@ -166,19 +186,32 @@ function LoginTextAreas (props) {
   return (
     <div>
       <div className="login_password_register_group">
-      <TextField
-          id="name_surname"
-          className={classes.textField}
+      <div className="name_surname_group">
+        <TextField
+          id="name"
           variant="filled"
-          label="write your name and surname"
+          label="Name"
           margin="dense"
+          className={classes2.textField}
+          style={{width: 170}}
         />
+        <TextField
+          id="surname"
+          variant="filled"
+          label="Surname"
+          margin="dense"
+          className={classes2.textField}
+          style={{width: 170}}
+        />
+      </div>
+      
         <TextField
           id="newloginTextArea"
           className={classes.textField}
           variant="filled"
           label="write your new login"
           margin="dense"
+         
         />
         <TextField
           id="newPasswordTextArea"
@@ -218,9 +251,34 @@ class App extends React.Component {
     super(props);
     this.state = {
       loginBox: 1, 
-      loginButton: 1
+      loginButton: 1, 
+      signin: [null, null],
+      register: [null, null, null, null], 
+      signedin: 0
+      
     };
   }
+
+  callApi = () => {
+    fetch("http://localhost:4000")
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.data.length)
+        
+      })
+      
+  }
+
+  componentDidMount() {
+    this.callApi(); 
+  }
+
+  signinInputHandle = (e) => {
+    if (e.target.value === 'signin' ) {
+      alert("hello")
+    }
+  }
+
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
