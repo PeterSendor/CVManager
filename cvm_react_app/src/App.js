@@ -155,19 +155,21 @@ function LoginTextAreas (props) {
   <div>
     <div className="login_password_group">
       <TextField
-        id="loginTextArea"
+        id="login"
         className={classes.textField}
         variant="filled"
         label="Please enter your login"
         margin="dense"
+        onChange={props.onChangeTextAreasSigninHandler}
       />
       <TextField
-        id="passwordTextArea"
+        id="password"
         className={classes.textField}
         variant="filled"
         margin="dense"
         label="Please enter your password"
-        type="password"   
+        type="password" 
+        onChange={props.onChangeTextAreasSigninHandler}  
       />    
           
     </div>
@@ -194,6 +196,7 @@ function LoginTextAreas (props) {
           margin="dense"
           className={classes2.textField}
           style={{width: 170}}
+          onChange = {props.onChangeTextAreasRegisterHandler}
         />
         <TextField
           id="surname"
@@ -202,32 +205,44 @@ function LoginTextAreas (props) {
           margin="dense"
           className={classes2.textField}
           style={{width: 170}}
+          onChange = {props.onChangeTextAreasRegisterHandler}
         />
       </div>
-      
-        <TextField
-          id="newloginTextArea"
+      <TextField
+          id="email"
           className={classes.textField}
           variant="filled"
-          label="write your new login"
+          label="Email"
           margin="dense"
+          onChange = {props.onChangeTextAreasRegisterHandler}
          
         />
         <TextField
-          id="newPasswordTextArea"
+          id="login"
+          className={classes.textField}
+          variant="filled"
+          label="Login"
+          margin="dense"
+          onChange = {props.onChangeTextAreasRegisterHandler}
+         
+        />
+        <TextField
+          id="password"
           className={classes.textField}
           variant="filled"
           margin="dense"
-          label="write your password"
+          label="Password"
           type="password"
+          onChange = {props.onChangeTextAreasRegisterHandler}
         />   
         <TextField
-          id="newPasswordTextArea"
+          id="repeat_pasword"
           className={classes.textField}
           variant="filled"
           margin="dense"
-          label="repeat your password"
+          label="Repeat password"
           type="password"
+          onChange = {props.onChangeTextAreasRegisterHandler}
         />     
             
       </div>
@@ -237,6 +252,7 @@ function LoginTextAreas (props) {
           variant="contained"
           color="secondary"
           className="sign_in_button_register"
+          onClick = {props.onClickLetStartButton}
           >Let's start!
         </Button>
         </ThemeProvider>
@@ -253,7 +269,7 @@ class App extends React.Component {
       loginBox: 1, 
       loginButton: 1, 
       signin: [null, null],
-      register: [null, null, null, null], 
+      register: [null, null, null, null, null], 
       signedin: 0
       
     };
@@ -273,12 +289,66 @@ class App extends React.Component {
     this.callApi(); 
   }
 
-  signinInputHandle = (e) => {
-    if (e.target.value === 'signin' ) {
-      alert("hello")
+  handleRegisterInput = (e) => {
+    const register_copy = this.state.register; 
+
+    if (e.target.id === "name" ) {
+      register_copy[0] = e.target.value; 
+
+      this.setState({
+        register: register_copy
+      })
+     } else if (e.target.id === "surname" ) {
+      register_copy[1] = e.target.value; 
+
+      this.setState({
+        register: register_copy
+      })
+     } else if (e.target.id === "email" ) {
+      register_copy[2] = e.target.value; 
+
+      this.setState({
+        register: register_copy
+      })
+     } else if (e.target.id === "login" ) {
+      register_copy[3] = e.target.value; 
+
+      this.setState({
+        register: register_copy
+      })
+     } else if (e.target.id === "password" ) {
+      register_copy[4] = e.target.value; 
+
+      this.setState({
+        register: register_copy
+      })
+     }
+  }
+   handleSigninInput = (e) => {
+    const signin_copy = this.state.signin; 
+
+    if (e.target.id === "login" ) {
+      signin_copy[0] = e.target.value; 
+
+      this.setState({
+        register: signin_copy
+      })
+     } else if (e.target.id === "password" ) {
+      signin_copy[1] = e.target.value; 
+
+      this.setState({
+        register: signin_copy
+      })
+     } 
+  }
+  handleLetsStartButton = () => {
+    
+    if (this.state.loginButton === 0) {
+      alert("loguj sie")
+    } else if (this.state.loginButton === 1) {
+      alert ("rejestruj sie")
     }
   }
-
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
@@ -317,6 +387,9 @@ class App extends React.Component {
         /> 
         <LoginTextAreas 
           textAreasSelector = {this.state.loginButton}
+          onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
+          onChangeTextAreasSigninHandler = {this.handleSigninInput}
+          onClickLetStartButton = {this.handleLetsStartButton}
         />
         </div>
         }
