@@ -4,17 +4,25 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var mysql      = require('mysql');
-/*var connection = mysql.createConnection({
+var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password  : 'phero01?!',     
-  database : 'HRallocations'  
+  database : 'CVManager'  
 });
  
 connection.connect();
 
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});*/
+  var q = 'select * from users'
+
+connection.query(q, function (err, result, fields) {
+  if (err) throw err; 
+  console.log(result + " user/s")
+  
+})  
+
+
+});
 
 module.exports = router;

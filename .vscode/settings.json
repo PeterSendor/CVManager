@@ -7,12 +7,25 @@
             },
             "previewLimit": 50,
             "server": "localhost",
-            "port": 3000,
+            "port": 3306,
             "driver": "MySQL",
             "name": "piotr",
             "database": "HRallocations",
             "username": "root",
             "password": "phero01?!"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "piotr2",
+            "database": "HRallocations",
+            "username": "root",
+            "password": "piotr01?!"
         }
     ]
 }

@@ -39,7 +39,7 @@ body {
 .loginBox_register {
   position: absolute;
   width: 420px;
-  height: 360px;
+  height: 400px;
   left: 800px;
   top: 74px;
   opacity: 100%;
@@ -74,7 +74,7 @@ body {
 }
 .sign_in_button_register {
   position: relative; 
-  top: 165px;
+  top: 155px;
   left: 735px;
 }
 .name_surname_group {

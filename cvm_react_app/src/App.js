@@ -8,6 +8,14 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import ReactFormInputValidation from "react-form-input-validation";
+
+const initialValues = {
+  name: 'sa',
+  surname: '',
+  email: '',
+  password: ''
+}
 
 
 const inputStyles = makeStyles((theme: Theme) =>
@@ -149,6 +157,7 @@ function LoginTextAreas (props) {
   const classes = inputStyles();
   const option = props.textAreasSelector; 
   const classes2 = inputStyles_name_surname();
+  
 
   if (option === 1) {
   return (
@@ -197,6 +206,7 @@ function LoginTextAreas (props) {
           className={classes2.textField}
           style={{width: 170}}
           onChange = {props.onChangeTextAreasRegisterHandler}
+          helperText='null'
         />
         <TextField
           id="surname"
@@ -209,21 +219,25 @@ function LoginTextAreas (props) {
         />
       </div>
       <TextField
+      error
           id="email"
           className={classes.textField}
           variant="filled"
           label="Email"
           margin="dense"
           onChange = {props.onChangeTextAreasRegisterHandler}
+          helperText='chuj ci w dupe'
          
         />
         <TextField
+        
           id="login"
           className={classes.textField}
           variant="filled"
-          label="Login"
+          label="Login" required
           margin="dense"
           onChange = {props.onChangeTextAreasRegisterHandler}
+          error="sd"
          
         />
         <TextField
@@ -342,13 +356,35 @@ class App extends React.Component {
      } 
   }
   handleLetsStartButton = () => {
-    
-    if (this.state.loginButton === 0) {
-      alert("loguj sie")
-    } else if (this.state.loginButton === 1) {
-      alert ("rejestruj sie")
+    const login = {
+      login: this.state.register[3]
     }
-  }
+
+    function validator () {
+      let checkFields = this.state.register; 
+      
+    }
+
+    console.log(login)
+    if (this.state.loginButton === 1) {
+     
+    
+    } else if (this.state.loginButton === 0) {
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+        'Accept': 'application/json' },
+        body: JSON.stringify({login})
+      };
+
+        fetch('http://localhost:4000/register_new_user', requestOptions)
+        .then(response => response.json())
+        .then((body) => {
+            alert(body.info)
+             console.log(body);
+        });  
+    }}
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
@@ -390,6 +426,8 @@ class App extends React.Component {
           onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
           onChangeTextAreasSigninHandler = {this.handleSigninInput}
           onClickLetStartButton = {this.handleLetsStartButton}
+         
+          
         />
         </div>
         }
