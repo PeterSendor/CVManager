@@ -157,7 +157,6 @@ function LoginTextAreas (props) {
   const classes = inputStyles();
   const option = props.textAreasSelector; 
   const classes2 = inputStyles_name_surname();
-  
 
   if (option === 1) {
   return (
@@ -204,9 +203,10 @@ function LoginTextAreas (props) {
           label="Name"
           margin="dense"
           className={classes2.textField}
-          style={{width: 170}}
           onChange = {props.onChangeTextAreasRegisterHandler}
-          helperText='null'
+          helperText={props.nameError}
+          error={props.nameShowError}
+          
         />
         <TextField
           id="surname"
@@ -214,32 +214,24 @@ function LoginTextAreas (props) {
           label="Surname"
           margin="dense"
           className={classes2.textField}
-          style={{width: 170}}
           onChange = {props.onChangeTextAreasRegisterHandler}
+          helperText={props.surnameError}
+          error={props.surnameShowError}
         />
       </div>
       <TextField
-      error
           id="email"
           className={classes.textField}
           variant="filled"
           label="Email"
           margin="dense"
           onChange = {props.onChangeTextAreasRegisterHandler}
-          helperText='chuj ci w dupe'
+          helperText={props.emailError}
+          error={props.emailShowError}
+          
          
         />
-        <TextField
-        
-          id="login"
-          className={classes.textField}
-          variant="filled"
-          label="Login" required
-          margin="dense"
-          onChange = {props.onChangeTextAreasRegisterHandler}
-          error="sd"
-         
-        />
+
         <TextField
           id="password"
           className={classes.textField}
@@ -248,15 +240,20 @@ function LoginTextAreas (props) {
           label="Password"
           type="password"
           onChange = {props.onChangeTextAreasRegisterHandler}
+          helperText={props.passwordError}
+          error={props.passwordShowError}
         />   
         <TextField
-          id="repeat_pasword"
+          id="repeat_password"
           className={classes.textField}
           variant="filled"
           margin="dense"
           label="Repeat password"
           type="password"
           onChange = {props.onChangeTextAreasRegisterHandler}
+          helperText={props.passwordDBCheckError}
+          error={props.passwordDBCheckShowError}
+          
         />     
             
       </div>
@@ -283,8 +280,20 @@ class App extends React.Component {
       loginBox: 1, 
       loginButton: 1, 
       signin: [null, null],
-      register: [null, null, null, null, null], 
-      signedin: 0
+      register: ['', '', '', '', ''], 
+      signedin: 0,
+      namePrompt: 'max 10 characters, no numbers', 
+      nameError: true,
+      surnamePrompt: 'max 10 characters, no numbers', 
+      surnameError: true,
+      emailPrompt: 'please provide correct email',
+      emailError: true,
+      passwordPrompt: 'please provide password using maximum 10 characters', 
+      passwordError: true, 
+      passwordDBCheckPrompt: 'provided passwords are not equal or password not provided', 
+      passwordDBCheckError: true
+
+      
       
     };
   }
@@ -306,6 +315,124 @@ class App extends React.Component {
   handleRegisterInput = (e) => {
     const register_copy = this.state.register; 
 
+{/*validator input*/}
+
+    let validator = () => {
+      let letterFormat = /^[a-zA-Z]+$/; 
+      let emailFormat = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+
+
+      if (
+        this.state.register[0].match(letterFormat) 
+        && this.state.register[0].length < 10) 
+          {
+            this.setState({
+            namePrompt: "done", 
+            nameError: false
+        })
+        
+      } else if (
+        !this.state.register[0].match(letterFormat) 
+        && this.state.register[0].length < 10 ){
+          this.setState({
+            namePrompt: "Please delete any numbers and special characters"
+        })
+      } else if (
+        this.state.register[0].match(letterFormat) 
+        && this.state.register[0].length > 10 ) {
+        this.setState({
+          namePrompt: "Please provide maximum 10 characters"
+        })
+      }
+
+            if (
+              this.state.register[1].match(letterFormat) 
+              && this.state.register[1].length < 10) 
+                {
+                  this.setState({
+                  surnamePrompt: "done", 
+                  surnameError: false
+              })
+              
+                } else if (
+                  !this.state.register[1].match(letterFormat) 
+                  && this.state.register[1].length < 10 ){
+                
+                    this.setState({
+                      surnamePrompt: "Please delete any numbers and special characters"
+                  })
+                
+                } else if (
+                  this.state.register[1].match(letterFormat) 
+                  && this.state.register[1].length > 10 ) {
+              
+                    this.setState({
+                      surnamePrompt: "Please provide maximum 10 characters"
+                    })
+                }
+
+
+            if (
+              this.state.register[2].match(emailFormat) 
+              ) 
+                {
+                  this.setState({
+                  emailPrompt: "done", 
+                  emailError: false
+              })
+              
+            } 
+            
+
+            if (
+              !this.state.register[2].match(emailFormat) 
+            )
+
+                {
+                  this.setState({
+                  emailPrompt: "Please provide correct email", 
+                  emailError: true
+              })
+              
+            } 
+
+            if (
+              this.state.register[3].length <= 12 
+              && this.state.register[3].length > 6) 
+                {
+                  this.setState({
+                  passwordPrompt: "done", 
+                  passwordError: false
+              })
+              
+            } else if (
+              this.state.register[3].length > 12 
+              || this.state.register[3].length < 6) {
+                this.setState({
+                  passwordPrompt: "Please provide password contains at least of 6 characters and no more then 12", 
+                  passwordError: true
+              })
+            } 
+
+            if (this.state.register[3] !== this.state.register[4]) {
+              this.setState({
+                passwordDBCheckPrompt: 'passwords are not equal', 
+                passwordDBCheckError: true
+              })
+            }
+
+            if (this.state.register[3] === this.state.register[4]) {
+              this.setState({
+                passwordDBCheckPrompt: 'done', 
+                passwordDBCheckError: false
+              })
+            }
+         
+    }
+
+{/*validator end*/}
+
+
     if (e.target.id === "name" ) {
       register_copy[0] = e.target.value; 
 
@@ -324,19 +451,22 @@ class App extends React.Component {
       this.setState({
         register: register_copy
       })
-     } else if (e.target.id === "login" ) {
+     } else if (e.target.id === "password" ) {
       register_copy[3] = e.target.value; 
 
       this.setState({
         register: register_copy
       })
-     } else if (e.target.id === "password" ) {
+
+     } else if (e.target.id === "repeat_password" ) {
       register_copy[4] = e.target.value; 
 
       this.setState({
         register: register_copy
       })
      }
+
+     validator();
   }
    handleSigninInput = (e) => {
     const signin_copy = this.state.signin; 
@@ -360,14 +490,24 @@ class App extends React.Component {
       login: this.state.register[3]
     }
 
-    function validator () {
-      let checkFields = this.state.register; 
-      
+    let checkAllFormErrors = () => {
+      if (this.state.nameError
+        || this.state.surnameError
+        || this.state.emailError
+        || this.state.passwordError
+        || this.state.passwordDBCheckError) {
+          console.log("errors!")
+          return 1
+        } else {
+          console.log("no errors")
+          return 0}
     }
+
+    checkAllFormErrors()
 
     console.log(login)
     if (this.state.loginButton === 1) {
-     
+     alert("zalogu")
     
     } else if (this.state.loginButton === 0) {
 
@@ -385,6 +525,7 @@ class App extends React.Component {
              console.log(body);
         });  
     }}
+
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
@@ -426,6 +567,16 @@ class App extends React.Component {
           onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
           onChangeTextAreasSigninHandler = {this.handleSigninInput}
           onClickLetStartButton = {this.handleLetsStartButton}
+          nameError = {this.state.namePrompt}
+          nameShowError = {this.state.nameError}
+          surnameError = {this.state.surnamePrompt}
+          surnameShowError = {this.state.surnameError}
+          emailError = {this.state.emailPrompt}
+          emailShowError = {this.state.emailError}
+          passwordError = {this.state.passwordPrompt}
+          passwordShowError = {this.state.passwordError}
+          passwordDBCheckError = {this.state.passwordDBCheckPrompt}
+          passwordDBCheckShowError = {this.state.passwordDBCheckError}
          
           
         />
