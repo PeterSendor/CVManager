@@ -8,20 +8,12 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import ReactFormInputValidation from "react-form-input-validation";
-
-const initialValues = {
-  name: 'sa',
-  surname: '',
-  email: '',
-  password: ''
-}
-
+import Avatar from './images/DefaultAvatar.jpg'
 
 const inputStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: 'block',
       flexWrap: 'wrap',
       color: '#d41274', 
       
@@ -37,30 +29,12 @@ const inputStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-const inputStyles_name_surname = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      color: '#d41274', 
-      
-    },
-    textField: {
-      marginLeft: theme.spacing(0),
-      marginRight: theme.spacing(1.5),
-      marginTop: theme.spacing(1),
-      width: '35ch', 
-      background: '#fff', 
-      borderRadius: 6,
-      
-    },
-  }),
-);
+
 const loginButtonStyle = theme => ({
   root: {
     position: 'absolute',
     top: '20px',
-    left: '1050px',
+    left: '320px',
     borderRadius: 6,
     border: 0,
     color: 'white',
@@ -95,6 +69,21 @@ theme.overrides = {
       }
   },
 }
+
+function WelcomeBox () {
+  return (
+    <div className="welcomeBoxFrame">
+      <img 
+        src={Avatar} 
+        alt="user avatar" 
+        width="50px"
+        height="50px"  
+      
+        />
+    </div>
+  )
+}
+
 
 function LoginBox (props) {
   const loginButtonsStyle = {}; 
@@ -156,7 +145,6 @@ function LoginBox (props) {
 function LoginTextAreas (props) {
   const classes = inputStyles();
   const option = props.textAreasSelector; 
-  const classes2 = inputStyles_name_surname();
 
   if (option === 1) {
   return (
@@ -169,6 +157,7 @@ function LoginTextAreas (props) {
         label="Please enter your login"
         margin="dense"
         onChange={props.onChangeTextAreasSigninHandler}
+        
       />
       <TextField
         id="password"
@@ -187,6 +176,7 @@ function LoginTextAreas (props) {
         variant="contained"
         color="secondary"
         className="sign_in_button_signin"
+        onClick = {props.onClickLetStartButton}
         >Let's start!
       </Button>
       </ThemeProvider>
@@ -196,13 +186,13 @@ function LoginTextAreas (props) {
   return (
     <div>
       <div className="login_password_register_group">
-      <div className="name_surname_group">
+      
         <TextField
           id="name"
           variant="filled"
           label="Name"
           margin="dense"
-          className={classes2.textField}
+          className={classes.textField}
           onChange = {props.onChangeTextAreasRegisterHandler}
           helperText={props.nameError}
           error={props.nameShowError}
@@ -213,12 +203,12 @@ function LoginTextAreas (props) {
           variant="filled"
           label="Surname"
           margin="dense"
-          className={classes2.textField}
+          className={classes.textField}
           onChange = {props.onChangeTextAreasRegisterHandler}
           helperText={props.surnameError}
           error={props.surnameShowError}
         />
-      </div>
+      
       <TextField
           id="email"
           className={classes.textField}
@@ -282,6 +272,7 @@ class App extends React.Component {
       signin: [null, null],
       register: ['', '', '', '', ''], 
       signedin: 0,
+      recognisedUser: 0, 
       namePrompt: 'max 10 characters, no numbers', 
       nameError: true,
       surnamePrompt: 'max 10 characters, no numbers', 
@@ -316,7 +307,6 @@ class App extends React.Component {
     const register_copy = this.state.register; 
 
 {/*validator input*/}
-
     let validator = () => {
       let letterFormat = /^[a-zA-Z]+$/; 
       let emailFormat = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
@@ -429,7 +419,6 @@ class App extends React.Component {
             }
          
     }
-
 {/*validator end*/}
 
 
@@ -486,9 +475,9 @@ class App extends React.Component {
      } 
   }
   handleLetsStartButton = () => {
-    const login = {
-      login: this.state.register[3]
-    }
+    const userDataPack = 
+      this.state.register.slice(0,4)
+    
 
     let checkAllFormErrors = () => {
       if (this.state.nameError
@@ -496,26 +485,52 @@ class App extends React.Component {
         || this.state.emailError
         || this.state.passwordError
         || this.state.passwordDBCheckError) {
-          console.log("errors!")
-          return 1
+          
+          return false
+
         } else {
-          console.log("no errors")
-          return 0}
+          
+          return true
+        }
     }
 
     checkAllFormErrors()
 
-    console.log(login)
-    if (this.state.loginButton === 1) {
-     alert("zalogu")
     
-    } else if (this.state.loginButton === 0) {
+    if (this.state.loginButton === 1) {
+     let loginPack = {
+       login: this.state.signin[0],
+        password: this.state.signin[1]
+    }
+
+     console.log("wysylka: " + loginPack.login)
+
+     const requestOptions = {
+       method: 'POST', 
+       headers: {
+         'Content-Type': 'application/json', 
+         'Accept': 'application/json'}, 
+        body: JSON.stringify(loginPack)
+       }
+
+     fetch('http://localhost:4000/login', requestOptions)
+     .then(response => response.json())
+     .then((body) => {
+       console.log(body)
+     });
+
+
+    } else if (this.state.loginButton === 0) 
+    {
+      
+
+      if (checkAllFormErrors()) {
 
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
         'Accept': 'application/json' },
-        body: JSON.stringify({login})
+        body: JSON.stringify({userDataPack})
       };
 
         fetch('http://localhost:4000/register_new_user', requestOptions)
@@ -524,7 +539,11 @@ class App extends React.Component {
             alert(body.info)
              console.log(body);
         });  
-    }}
+    } else {
+      alert("Please fix errors in register form")
+    }
+  
+  }} 
 
   handleSigninButton = () => {
     this.setState({
@@ -547,15 +566,16 @@ class App extends React.Component {
     return  (
 
       <Container 
-        maxWidth="sm"
-      >
+        maxWidth="sm">
+
         <div className="titleLabel">
           <p 
             className="titleP"
           >CVManager v 1.0
           </p>
         </div>
-
+        
+        <div className="brutal">
         { this.state.loginBox === 1 ? null : 
         <div><LoginBox 
           buttonSelector = {this.state.loginButton}
@@ -584,6 +604,10 @@ class App extends React.Component {
         }
 
         <ThemeProvider theme={theme}>
+          {this.state.recognisedUser === 1 ? 
+          
+            <WelcomeBox></WelcomeBox>
+          : 
           <Button 
             variant="contained" 
             color="primary"
@@ -592,8 +616,10 @@ class App extends React.Component {
           >
           Sign in/Sign up
             
-          </Button>
+          </Button>}
+          
         </ThemeProvider>
+        </div>
         
       </Container> 
 

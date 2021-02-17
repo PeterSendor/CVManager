@@ -18,16 +18,28 @@ var connection = mysql.createConnection({
 connection.connect();
 
 router.post ('/', function (req, res) {
-    
-    connection.query('select login from users', function (err, result) {
-        if (err) throw err; 
-        let login = result.find(element => element = req.body.login)
-        console.log(login.login)
-        console.log(req.body.login)
+    let userLogin = req.body.userDataPack[2]; 
 
-        if (login.login === req.body.login) {
+
+    connection.query('select login from users where login = ?', [userLogin], function (err, result) {
+        if (err) throw err; 
+        let login = result.find(element => element.login == req.body.userDataPack[2])
+
+        if (login) {
             res.send({info: "Sorry! Provided username already exists, please choose another login"})
+
         } else {
+            console.log("else launched")
+            let values = [req.body.userDataPack];
+            console.log(values[0]) 
+
+            connection.query('insert into users (name, surname, login, password) values (?)', [values[0]], function (err, result) {
+                if (err) throw err; 
+                console.log(result)
+                console.log(values)
+                console.log("query done")
+                
+            })
             res.send({info: "You have been registered! Please log in"})
             
         }

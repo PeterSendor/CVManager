@@ -30,7 +30,7 @@ body {
   position: absolute;
   width: 420px;
   height: 250px;
-  left: 800px;
+  left: 75px;
   top: 74px;
   opacity: 100%;
   background: #2f508d;
@@ -39,8 +39,8 @@ body {
 .loginBox_register {
   position: absolute;
   width: 420px;
-  height: 400px;
-  left: 800px;
+  height: 550px;
+  right: 10px;
   top: 74px;
   opacity: 100%;
   background: #2f508d;
@@ -59,24 +59,37 @@ body {
 }
 .login_password_group {
   position: relative; 
-  left: 430px;
+  left: 90px;
   top: 140px;
 }
 .login_password_register_group {
   position: relative; 
-  left: 430px;
+  right: -75px;
   top: 130px;
+  display:block; 
+  width: 415px;
 }
 .sign_in_button_signin {
   position: relative; 
   top: 175px;
-  left: 735px;
+  left: 374px;
 }
 .sign_in_button_register {
   position: relative; 
   top: 155px;
-  left: 735px;
+  left: 370px;
 }
-.name_surname_group {
-  margin-left: 32px;
+.brutal {
+  position: absolute; 
+  right: 10px; 
+  width: 500px; 
+  height: 800px;
+}
+.welcomeBoxFrame {
+  position: relative; 
+  top: 20px;
+  right: -650px;
+  border: 1px solid black; 
+  width: 250px;
+  height: 60px;
 }
