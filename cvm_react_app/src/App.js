@@ -70,16 +70,21 @@ theme.overrides = {
   },
 }
 
-function WelcomeBox () {
+function WelcomeBox (props) {
   return (
     <div className="welcomeBoxFrame">
+      <div className="welcomeName">{props.welcomeName}</div>
+      <div className="welcomeSurname">{props.welcomeSurname}</div>
+      <div className="avatar">
       <img 
         src={Avatar} 
         alt="user avatar" 
         width="50px"
-        height="50px"  
+        height="50px" 
       
         />
+      </div>
+      
     </div>
   )
 }
@@ -282,7 +287,9 @@ class App extends React.Component {
       passwordPrompt: 'please provide password using maximum 10 characters', 
       passwordError: true, 
       passwordDBCheckPrompt: 'provided passwords are not equal or password not provided', 
-      passwordDBCheckError: true
+      passwordDBCheckError: true, 
+      welcomeName: "Piotr", 
+      welcomeSurname: "Sendor"
 
       
       
@@ -474,10 +481,10 @@ class App extends React.Component {
       })
      } 
   }
+
   handleLetsStartButton = () => {
     const userDataPack = 
-      this.state.register.slice(0,4)
-    
+      this.state.register.slice(0,4);
 
     let checkAllFormErrors = () => {
       if (this.state.nameError
@@ -493,31 +500,62 @@ class App extends React.Component {
           return true
         }
     }
-
     checkAllFormErrors()
 
-    
+      
+  let fillWelcomeNames = (name, surname) => {
+    this.setState({
+      welcomeName: name,
+      welcomeSurname: surname, 
+      recognisedUser: 1, 
+      loginBox: 1
+    })
+  }
+
+    {/* when in login mode*/}
     if (this.state.loginButton === 1) {
-     let loginPack = {
-       login: this.state.signin[0],
-        password: this.state.signin[1]
-    }
 
-     console.log("wysylka: " + loginPack.login)
+      let loginPack = {
+        login: this.state.signin[0],
+         password: this.state.signin[1]
+     }
+      
+      function checkAllLoginForms (userLoginPack) {
+        const that = this; 
+        {/* if login anf password are present - send POST*/}
 
-     const requestOptions = {
-       method: 'POST', 
-       headers: {
-         'Content-Type': 'application/json', 
-         'Accept': 'application/json'}, 
-        body: JSON.stringify(loginPack)
-       }
+        if (loginPack.login !== null && loginPack.password !== null) {
+          
+          console.log("wysylka: " + loginPack.login)
 
-     fetch('http://localhost:4000/login', requestOptions)
-     .then(response => response.json())
-     .then((body) => {
-       console.log(body)
-     });
+
+          const requestOptions = {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json', 
+              'Accept': 'application/json'}, 
+              body: JSON.stringify(loginPack)
+            }
+
+          fetch('http://localhost:4000/login', requestOptions)
+          .then(response => response.json())
+          .then((body) => {
+            if (body.info) {
+              alert(body.info)
+            } else {
+              fillWelcomeNames(body.name, body.surname)
+              console.log(body)
+            }
+            
+            
+          });
+
+        } else {
+          alert("Please provide correct login/password")
+        }
+      }
+
+     checkAllLoginForms(); 
 
 
     } else if (this.state.loginButton === 0) 
@@ -606,7 +644,10 @@ class App extends React.Component {
         <ThemeProvider theme={theme}>
           {this.state.recognisedUser === 1 ? 
           
-            <WelcomeBox></WelcomeBox>
+            <WelcomeBox
+              welcomeName = {this.state.welcomeName}
+              welcomeSurname = {this.state.welcomeSurname}
+            ></WelcomeBox>
           : 
           <Button 
             variant="contained" 

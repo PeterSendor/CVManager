@@ -17,23 +17,28 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-function loginChecker (rawLoginPack) {
-    let userLogin = rawLoginPack.login;
-    let userPassword = rawLoginPack.password; 
+router.post ('/', function (req, res) {
+    
+    let userLogin = req.body.login;
+    let userPassword = req.body.password; 
 
     connection.query ('select * from users where login = ? and password = ?', [userLogin, userPassword], function (err, result) {
         if (err) throw err; 
-        let userNamePack = [result[0].name, result[0].surname]
-        console.log("funkcja wypluwa: " + userNamePack)
-        return userNamePack; 
+        console.log(result[0])
+
+        if (result[0] === undefined) {
+            res.send ({info: "No such login/password. Please try again"})
+        } else {
+            res.send({
+                id: result[0].id, 
+                name: result[0].name,
+                surname: result[0].surname
+            })
+        }
+        
 
     })
-}
 
-router.post ('/', function (req, res) {
-    
-    res.send(JSON.stringify(loginChecker(req.body)))
-    console.log("post wypluwa: " + loginChecker(req.body))
 })
 
 module.exports = router;
