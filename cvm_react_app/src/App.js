@@ -70,6 +70,99 @@ theme.overrides = {
   },
 }
 
+function CvRecordItem (props) {
+  
+  return (
+  <div className="holderFrame">
+  <div className="cvRecordFrame">
+    <div className="cvRecordItemContent">
+      <div className="cvRecordItemContent_title">
+      {props.title}
+      </div>
+      <div className="cvRecordItemContent_company">
+      {props.company}
+      </div>
+      <div className="cvRecordItemContent_date">
+      {props.date}
+      </div>
+  
+  </div>
+  
+    <div className="cvRecordItemIndicator">
+
+    </div>
+    <div className="cvRecordItemX">
+      x
+    </div>
+    <div className="cvRecordItemC">
+      c
+    </div>
+  </div>
+  
+  </div> 
+  )
+}
+function LeftMenu (props) {
+  const cvListDataPack = [
+    {
+    title: "A", 
+    company: "comp1",
+    date: "20.02.2020"
+    },
+    {
+    title: "B", 
+    company: "comp2",
+    date: "20.02.2020"
+    },
+    {
+    title: "C", 
+    company: "comp3",
+    date: "20.02.2020"
+    },
+  ]
+  const cvItem = 
+    cvListDataPack.map((item) => {
+      
+      return (
+      <CvRecordItem 
+        title={item.title}
+        company={item.company}
+        date={item.date}
+      />
+      )
+    })
+  
+  const leftMenuVisibility = 1;
+
+  if (leftMenuVisibility) {
+    
+    return (
+      <div className="leftMenuHolder">
+        <div className="leftMenuFrame">
+          <div className="closeBar" onClick={function ele () {alert("hej")}}>o</div>
+          <div className="leftMenu">
+            <div className="titleBox">
+              CV list
+            </div>
+              <div className="cvRecordsList">
+                {cvItem}
+                
+              </div>
+          </div>
+          
+        </div>
+      
+      </div>
+      )
+  } else {
+    return (
+      <div></div>
+    )
+  }
+
+}
+
+
 function WelcomeBox (props) {
   return (
     <div className="welcomeBoxFrame">
@@ -657,7 +750,11 @@ class App extends React.Component {
           >
           Sign in/Sign up
             
-          </Button>}
+          </Button>
+          }
+
+          <LeftMenu></LeftMenu>
+
           
         </ThemeProvider>
         </div>
