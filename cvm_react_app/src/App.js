@@ -102,8 +102,8 @@ function CvRecordItem (props) {
   </div> 
   )
 }
-function RecordsBox (props) {
 
+function LeftMenu (props) {
   const cvListDataPack = [
     {
     title: "A", 
@@ -132,21 +132,7 @@ function RecordsBox (props) {
       />
       )
     })
-
-  return (
-    <div className="leftMenu">
-    <div className="titleBox">
-      CV list
-    </div>
-      <div className="cvRecordsList">
-        {cvItem}
-        
-      </div>
-  </div>
-  )
-}
-function LeftMenu (props) {
-
+  
   const leftMenuVisibility = 1;
 
   if (leftMenuVisibility) {
@@ -155,22 +141,23 @@ function LeftMenu (props) {
       <div className="leftMenuHolder">
         <div className="leftMenuFrame">
           <div className="closeBar" onClick={function ele () {alert("hej")}}>o</div>
-          <RecordsBox />
+          <div className="leftMenu">
+            <div className="titleBox">
+              CV list
+            </div>
+              <div className="cvRecordsList">
+                {cvItem}
+                
+              </div>
+          </div>
           
         </div>
       
       </div>
       )
-  } else if (leftMenuVisibility === 0) {
+  } else {
     return (
-      <div className="leftMenuHolder">
-      <div className="leftMenuFrame">
-        <div className="closeBar_Closed" onClick={function ele () {alert("hej")}}>o</div>
-        
-        
-      </div>
-    
-    </div>
+      <div></div>
     )
   }
 
