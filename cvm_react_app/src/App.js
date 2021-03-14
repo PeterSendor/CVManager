@@ -70,6 +70,113 @@ theme.overrides = {
   },
 }
 
+function CvRecordItem (props) {
+  
+  return (
+  <div className="holderFrame">
+  <div className="cvRecordFrame">
+    <div className="cvRecordItemContent">
+      <div className="cvRecordItemContent_title">
+      {props.title}
+      </div>
+      <div className="cvRecordItemContent_company">
+      {props.company}
+      </div>
+      <div className="cvRecordItemContent_date">
+      {props.date}
+      </div>
+  
+  </div>
+  
+    <div className="cvRecordItemIndicator">
+
+    </div>
+    <div className="cvRecordItemX">
+      x
+    </div>
+    <div className="cvRecordItemC">
+      c
+    </div>
+  </div>
+  
+  </div> 
+  )
+}
+function RecordsBox (props) {
+
+  const cvListDataPack = [
+    {
+    title: "A", 
+    company: "comp1",
+    date: "20.02.2020"
+    },
+    {
+    title: "B", 
+    company: "comp2",
+    date: "20.02.2020"
+    },
+    {
+    title: "C", 
+    company: "comp3",
+    date: "20.02.2020"
+    },
+  ]
+  const cvItem = 
+    cvListDataPack.map((item) => {
+      
+      return (
+      <CvRecordItem 
+        title={item.title}
+        company={item.company}
+        date={item.date}
+      />
+      )
+    })
+
+  return (
+    <div className="leftMenu">
+    <div className="titleBox">
+      CV list
+    </div>
+      <div className="cvRecordsList">
+        {cvItem}
+        
+      </div>
+  </div>
+  )
+}
+function LeftMenu (props) {
+
+  const leftMenuVisibility = 1;
+
+  if (leftMenuVisibility) {
+    
+    return (
+      <div className="leftMenuHolder">
+        <div className="leftMenuFrame">
+          <div className="closeBar" onClick={function ele () {alert("hej")}}>o</div>
+          <RecordsBox />
+          
+        </div>
+      
+      </div>
+      )
+  } else if (leftMenuVisibility === 0) {
+    return (
+      <div className="leftMenuHolder">
+      <div className="leftMenuFrame">
+        <div className="closeBar_Closed" onClick={function ele () {alert("hej")}}>o</div>
+        
+        
+      </div>
+    
+    </div>
+    )
+  }
+
+}
+
+
 function WelcomeBox (props) {
   return (
     <div className="welcomeBoxFrame">
@@ -289,7 +396,8 @@ class App extends React.Component {
       passwordDBCheckPrompt: 'provided passwords are not equal or password not provided', 
       passwordDBCheckError: true, 
       welcomeName: "Piotr", 
-      welcomeSurname: "Sendor"
+      welcomeSurname: "Sendor", 
+      leftMenuOpen: 1
 
       
       
@@ -583,6 +691,11 @@ class App extends React.Component {
   
   }} 
 
+  handleOpenLeftMenuBar = () => {
+    this.setState({
+      leftMenuOpen: -this.leftMenuOpen
+    })
+  }
   handleSigninButton = () => {
     this.setState({
       loginButton: 1
@@ -657,10 +770,17 @@ class App extends React.Component {
           >
           Sign in/Sign up
             
-          </Button>}
+          </Button>
+          }
+
+          <LeftMenu 
+            leftMenuBarOnClick = {this.handleOpenLeftMenuBar}
+          />
+
           
         </ThemeProvider>
         </div>
+
         
       </Container> 
 

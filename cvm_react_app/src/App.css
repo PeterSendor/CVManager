@@ -100,7 +100,6 @@ body {
   float: left;
   top: 10px;
   color: white;
-  
   padding-left: 15px;
   width: auto;
   font-size: x-large;
@@ -120,6 +119,199 @@ body {
   float: left;
   text-align: right;
 
+}
+
+.cvRecordFrame {
+  position: absolute; 
+  width: 150px; 
+  height: 60px;
+  background-color: rgba(252, 242, 242, 1);
+  left: 20px;
+  top: 45px;  
+  border-radius: 5px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   
+}
+.cvRecordItemContent {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 18px;
+  top: 5px;
+  font: roboto;
+  padding: 5px;
+  
+}
+.cvRecordItemContent_title {
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0px;
+}
+.cvRecordItemContent_company {
+  font-size: 9px;
+}
+.cvRecordItemContent_date {
+  padding: 2px;
+  font-size: 9px;
+}
+
+.cvRecordItemIndicator {
+  position: absolute; 
+  width: 30px; 
+  height: 55px;
+  background-color:rgba(69, 183, 81, 0.72);
+  border-radius: 7px;
+  transform: rotate(-168deg);
+  left: -17px;
+  top: 0px;
+  
+}
+
+.cvRecordItemX {
+  position: absolute; 
+  width: 14px; 
+  height: 14px;
+  background-color: rgba(212, 21, 116, 1);
+  border-radius: 0 0.3em 0 0.3em;
+  right: 0;
+  top: 0;
+  color: white; 
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+  font-size: x-small;
+  
+}
+
+.cvRecordItemC {
+  position: absolute; 
+  width: 14px; 
+  height: 14px;
+  background-color: rgba(212, 21, 116, 1);
+  border-radius: 0.3em 0 0.4em 0;
+  right: 0;
+  bottom: 0;
+  color: white; 
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+  font-size: x-small;
+  
+}
+
+.triangle { 
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-color: green;
+  border: inherit;
+  position: absolute;
+  bottom: 90px;
+  left: calc(50% - 100px);
+  clip-path: polygon(0% 0%, 100% 100%, 30% 100%);
+  transform: rotate(-135deg);
+  border-radius: 1em 2em 1em 5em;
+ }
+
+ .holderFrame {
+   position: relative;
+   padding-bottom: 70px;
+   
+ }
+ .leftMenuHolder {
+   position: absolute;
+   height: 500px;
+   left: -220px;
+   top: 100px;
+ }
+ .leftMenuFrame {
+  position: relative;
+  height: 100%;
+
+}
+.leftMenu {
+  position: absolute;
+  height: 100%;
+  width: 190px;
+  border: 1px solid black;
+  left: -530px;
+  top: -10px;
+}
+.titleBox {
+  position: absolute;
+  height: 35px;
+  width: 173px;
+  border-radius: 5.5px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #007CA5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4.5px;
+  
+}
+.cvRecordsList {
+  display: flex;
+  flex-direction: column;
+}
+.closeBar {
+  position: absolute;
+  left: -340px;
+  top: -10px;
+  width: 15px;
+  height: 100%;
+  background-color: rgba(16, 31, 87, 0.66);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  
+}
+.closeBar:hover {
+  position: absolute;
+  left: -340px;
+  top: -10px;
+  width: 15px;
+  height: 100%;
+  background-color: rgba(2, 11, 44, 0.66);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+.closeBar_Closed {
+  position: absolute;
+  left: -530px;
+  top: -10px;
+  width: 15px;
+  height: 100%;
+  background-color: rgba(16, 31, 87, 0.66);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  
+}
+.closeBar_Closed:hover {
+  position: absolute;
+  left: -530px;
+  top: -10px;
+  width: 15px;
+  height: 100%;
+  background-color: rgba(2, 11, 44, 0.66);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+.mainClass {
+  position: relative;
+  top: 0px; 
+  left: 0px; 
+  width: 100%;
+  height: 100%;
 
 }
