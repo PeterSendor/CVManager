@@ -34,7 +34,7 @@ const loginButtonStyle = theme => ({
   root: {
     position: 'absolute',
     top: '20px',
-    left: '320px',
+    right: '10px',
     borderRadius: 6,
     border: 0,
     color: 'white',
@@ -138,7 +138,7 @@ function LeftMenu (props) {
     
     return (
       <div className="leftMenuHolder">
-        <div className="leftMenuFrame">
+        
           <div className="closeBar" onClick={function ele () {alert("hej")}}>o</div>
           <div className="leftMenu">
             <div className="titleBox">
@@ -150,7 +150,7 @@ function LeftMenu (props) {
               </div>
           </div>
           
-        </div>
+        
       
       </div>
       )
@@ -161,7 +161,23 @@ function LeftMenu (props) {
   }
 
 }
+function Positions (props) {
+  const positionsFeed = {
+    1: {id: 1, 
+        title: "Project manager", 
+        date: "03/20 - 04/20",
+        desc: "The task of the foundation was..."
+      }
+  }
 
+  return (
+    <div className="positionMainDiv">
+      <div className="positionsTitleDiv">
+
+      </div>
+    </div>
+  )
+}
 
 function WelcomeBox (props) {
   return (
@@ -706,34 +722,36 @@ class App extends React.Component {
           </p>
         </div>
         
-        <div className="brutal">
+        
         { this.state.loginBox === 1 ? null : 
-        <div><LoginBox 
-          buttonSelector = {this.state.loginButton}
-          onclickButton1 = {this.handleSigninButton}
-          onclickButton2 = {this.handleRegisterButton}
-        /> 
-        <LoginTextAreas 
-          textAreasSelector = {this.state.loginButton}
-          onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
-          onChangeTextAreasSigninHandler = {this.handleSigninInput}
-          onClickLetStartButton = {this.handleLetsStartButton}
-          nameError = {this.state.namePrompt}
-          nameShowError = {this.state.nameError}
-          surnameError = {this.state.surnamePrompt}
-          surnameShowError = {this.state.surnameError}
-          emailError = {this.state.emailPrompt}
-          emailShowError = {this.state.emailError}
-          passwordError = {this.state.passwordPrompt}
-          passwordShowError = {this.state.passwordError}
-          passwordDBCheckError = {this.state.passwordDBCheckPrompt}
-          passwordDBCheckShowError = {this.state.passwordDBCheckError}
-         
-          
-        />
-        </div>
+          <div className="signin_up_button_frame">
+            <div>
+            <LoginBox 
+              buttonSelector = {this.state.loginButton}
+              onclickButton1 = {this.handleSigninButton}
+              onclickButton2 = {this.handleRegisterButton}
+            /> 
+            <LoginTextAreas 
+              textAreasSelector = {this.state.loginButton}
+              onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
+              onChangeTextAreasSigninHandler = {this.handleSigninInput}
+              onClickLetStartButton = {this.handleLetsStartButton}
+              nameError = {this.state.namePrompt}
+              nameShowError = {this.state.nameError}
+              surnameError = {this.state.surnamePrompt}
+              surnameShowError = {this.state.surnameError}
+              emailError = {this.state.emailPrompt}
+              emailShowError = {this.state.emailError}
+              passwordError = {this.state.passwordPrompt}
+              passwordShowError = {this.state.passwordError}
+              passwordDBCheckError = {this.state.passwordDBCheckPrompt}
+              passwordDBCheckShowError = {this.state.passwordDBCheckError}
+            
+            />
+            </div>
+          </div>
         }
-
+        
         <ThemeProvider theme={theme}>
           {this.state.recognisedUser === 1 ? 
           
@@ -753,12 +771,23 @@ class App extends React.Component {
           </Button>
           }
 
-          <LeftMenu></LeftMenu>
+          <ul className="mainHolder">
+            <li>
+              <LeftMenu></LeftMenu>
+              </li>
+            <li>
+            <Positions></Positions>
+            </li>
+              
+            </ul>
+            
+          
 
           
         </ThemeProvider>
-        </div>
         
+        
+
       </Container> 
 
     )
