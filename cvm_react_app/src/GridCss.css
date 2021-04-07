@@ -1,0 +1,37 @@
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 0.4fr 1fr 1fr;
+    grid-template-rows: 90px 2fr 70px;
+    grid-template-areas: 
+        "nav nav nav"
+        "left middle right"
+        "footer footer footer";
+
+}
+
+nav {
+    grid-area: nav;
+   
+}
+
+#leftMenu {
+    grid-area: left;
+}
+
+#middleMenu {
+    grid-area: middle;
+    background-color: burlywood;
+}
+
+#rightMenu {
+    grid-area: right;
+    background-color: cadetblue;
+}
+
+footer {
+    grid-area: footer;
+    background-color: black;
+    
+
+}

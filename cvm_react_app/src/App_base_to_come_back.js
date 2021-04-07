@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
-import './GridCss.css';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -30,6 +29,7 @@ const inputStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
 const loginButtonStyle = theme => ({
   root: {
     position: 'absolute',
@@ -46,6 +46,24 @@ const loginButtonStyle = theme => ({
     textTransform: 'capitalize',
   },
 });
+
+const loginButtonStyle = theme => ({
+  root: {
+    position: 'absolute',
+    top: '20px',
+    right: '10px',
+    borderRadius: 6,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+});
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -60,22 +78,6 @@ const theme = createMuiTheme({
     contrastThreshold: 3,
     tonalOffset: 0.2,
 });
-
-const plusTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#d41274',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#d41274',
-      contrastText: '#fff',
-    },
-  },
-    contrastThreshold: 3,
-    tonalOffset: 0.2,
-});
-
 theme.overrides = {
   ...theme.overrides,
   MuiButton: {
@@ -194,6 +196,7 @@ function Positions (props) {
     </div>
   )
 }
+
 function WelcomeBox (props) {
   return (
     <div className="welcomeBoxFrame">
@@ -212,6 +215,8 @@ function WelcomeBox (props) {
     </div>
   )
 }
+
+
 function LoginBox (props) {
   const loginButtonsStyle = {}; 
   const classes = inputStyles();
@@ -412,6 +417,8 @@ class App extends React.Component {
       passwordDBCheckError: true, 
       welcomeName: "Piotr", 
       welcomeSurname: "Sendor"
+
+      
       
     };
   }
@@ -425,11 +432,14 @@ class App extends React.Component {
       })
       
   }
+
   componentDidMount() {
     this.callApi(); 
   }
+
   handleRegisterInput = (e) => {
     const register_copy = this.state.register; 
+
 {/*validator input*/}
     let validator = () => {
       let letterFormat = /^[a-zA-Z]+$/; 
@@ -544,6 +554,7 @@ class App extends React.Component {
          
     }
 {/*validator end*/}
+
 
     if (e.target.id === "name" ) {
       register_copy[0] = e.target.value; 
@@ -718,85 +729,88 @@ class App extends React.Component {
   render () {
     const { classes } = this.props;
     return  (
-      <div class="container">
 
-         <nav>
-         
-          <div className="titleLabel">
-            <p 
-              className="titleP"
-            >CVManager v 1.0
-            </p>
+      <Container 
+        maxWidth="sm">
+
+        <div className="titleLabel">
+          <p 
+            className="titleP"
+          >CVManager v 1.0
+          </p>
+        </div>
+        
+        
+        { this.state.loginBox === 1 ? null : 
+          <div className="signin_up_button_frame">
+            <div>
+            <LoginBox 
+              buttonSelector = {this.state.loginButton}
+              onclickButton1 = {this.handleSigninButton}
+              onclickButton2 = {this.handleRegisterButton}
+            /> 
+            <LoginTextAreas 
+              textAreasSelector = {this.state.loginButton}
+              onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
+              onChangeTextAreasSigninHandler = {this.handleSigninInput}
+              onClickLetStartButton = {this.handleLetsStartButton}
+              nameError = {this.state.namePrompt}
+              nameShowError = {this.state.nameError}
+              surnameError = {this.state.surnamePrompt}
+              surnameShowError = {this.state.surnameError}
+              emailError = {this.state.emailPrompt}
+              emailShowError = {this.state.emailError}
+              passwordError = {this.state.passwordPrompt}
+              passwordShowError = {this.state.passwordError}
+              passwordDBCheckError = {this.state.passwordDBCheckPrompt}
+              passwordDBCheckShowError = {this.state.passwordDBCheckError}
+            
+            />
+            </div>
           </div>
+        }
+        
+        <ThemeProvider theme={theme}>
+          {this.state.recognisedUser === 1 ? 
+          
+            <WelcomeBox
+              welcomeName = {this.state.welcomeName}
+              welcomeSurname = {this.state.welcomeSurname}
+            ></WelcomeBox>
+          : 
+          <Button 
+            variant="contained" 
+            color="primary"
+            className={classes.root}
+            onClick={this.handleLoginButton}
+          > 
+          Sign in/Sign up
+            
+          </Button>
+          }
 
-          <ThemeProvider theme={theme}>
-            <Button 
-              variant="contained" 
-              color="primary"
-              className={classes.root}
-              onClick={this.handleLoginButton}
-            > 
-            Sign in/Sign up
+          <ul className="mainHolder">
+            <li>
+              <LeftMenu></LeftMenu>
+              </li>
+            <li>
+            <Positions></Positions>
+            </li>
               
-            </Button>
-          </ThemeProvider>
+            </ul>
+            
           
 
-        </nav>
-         
-        <div id="leftMenu">
-          <div className="labelAndButtonHolder">
-            <div className="yourCVLabel">
-                your CV
-            </div>
-            <div>+
-              
-            </div>
-          </div>
-        </div>
-        <div id="middleMenu">middle Menu</div>
-        <div id="rightMenu">right Menu</div>
+          
+        </ThemeProvider>
+        
+        
 
-        <div id="externalWindows">
+      </Container> 
 
-          { this.state.loginBox === 1 ? null : 
-            <div>
-              <div className="loginBoxHolder">
-                <LoginBox 
-                  buttonSelector = {this.state.loginButton}
-                  onclickButton1 = {this.handleSigninButton}
-                  onclickButton2 = {this.handleRegisterButton}
-                /> 
-              
-              <LoginTextAreas 
-                textAreasSelector = {this.state.loginButton}
-                onChangeTextAreasRegisterHandler = {this.handleRegisterInput}
-                onChangeTextAreasSigninHandler = {this.handleSigninInput}
-                onClickLetStartButton = {this.handleLetsStartButton}
-                nameError = {this.state.namePrompt}
-                nameShowError = {this.state.nameError}
-                surnameError = {this.state.surnamePrompt}
-                surnameShowError = {this.state.surnameError}
-                emailError = {this.state.emailPrompt}
-                emailShowError = {this.state.emailError}
-                passwordError = {this.state.passwordPrompt}
-                passwordShowError = {this.state.passwordError}
-                passwordDBCheckError = {this.state.passwordDBCheckPrompt}
-                passwordDBCheckShowError = {this.state.passwordDBCheckError}
-              
-              />
-              </div>
-          </div>
-        } 
-
-        </div>
-         
-         <footer>Footer</footer>
-      </div>
-     
-      
     )
-}}
+  }
+}
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
