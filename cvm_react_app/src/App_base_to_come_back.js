@@ -89,7 +89,7 @@ theme.overrides = {
 }
 
 function CvRecordItem (props) {
-  
+
   return (
   <div className="holderFrame">
   <div className="cvRecordFrame">

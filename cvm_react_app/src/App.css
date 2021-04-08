@@ -130,7 +130,6 @@ body {
 }
 
 .cvRecordFrame {
-  
   width: 180px; 
   height: 80px;
   background-color: rgba(252, 242, 242, 1);
@@ -141,11 +140,14 @@ body {
 .cvRecordItemContent {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  left: 18px;
-  top: 5px;
+  position: relative;
+  top: -30px;
   font: roboto;
   padding: 5px;
+      padding-top: 5px;
+      padding-left: 5px;
+  padding-left: 25px;
+  padding-top: 15px;
   
 }
 .cvRecordItemContent_title {
@@ -154,55 +156,54 @@ body {
   padding: 0px;
 }
 .cvRecordItemContent_company {
-  font-size: 9px;
+  font-size: 11px;
 }
 .cvRecordItemContent_date {
   padding: 2px;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .cvRecordItemIndicator {
   position: absolute; 
   width: 30px; 
-  height: 55px;
+  height: 75px;
   background-color:rgba(69, 183, 81, 0.72);
   border-radius: 7px;
   transform: rotate(-168deg);
   left: -17px;
-  top: 0px;
+  top: 5px;
   
 }
 
 .cvRecordItemX {
-  position: absolute; 
-  width: 14px; 
+    position: relative;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(212, 21, 116, 1);
+    border-radius: 0 0.3em 0 0.3em;
+    right: -166px;
+    top: 0px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    vertical-align: center;
+    font-size: x-small;
+}
+
+
+.cvRecordItemC {
+  position: relative;
+  width: 14px;
   height: 14px;
   background-color: rgba(212, 21, 116, 1);
   border-radius: 0 0.3em 0 0.3em;
-  right: 0;
-  top: 0;
-  color: white; 
+  right: -166px;
+  bottom: -53px;
+  color: white;
   display: flex;
   justify-content: center;
   vertical-align: center;
   font-size: x-small;
-  
-}
-
-.cvRecordItemC {
-  position: absolute; 
-  width: 14px; 
-  height: 14px;
-  background-color: rgba(212, 21, 116, 1);
-  border-radius: 0.3em 0 0.4em 0;
-  right: 0;
-  bottom: 0;
-  color: white; 
-  display: flex;
-  justify-content: center;
-  vertical-align: center;
-  font-size: x-small;
-  
 }
 
 .triangle { 

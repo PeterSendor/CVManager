@@ -104,11 +104,36 @@ function CvRecordItem (props) {
 }
 
 function CvRecordItemTest (props) {
+  const cvRecordLabels = [{
+    title: "Project Manager", 
+    company: "comp1",
+    date: "20.02.2020"
+    }]
+    
+
   return (
     <div className="recordsBoxHolder">
       <div className="cvRecordFrame">
+        <div className="cvRecordItemX">
+        x
+        </div>
+        <div className="cvRecordItemC">
+        c
+        </div>
+        <div className="cvRecordItemContent">
+          <div className="cvRecordItemIndicator"></div>
+          <div className="cvRecordItemContent_title">
+            {cvRecordLabels[0].title}
+          </div>
+          <div className="cvRecordItemContent_company">
+            {cvRecordLabels[0].company}
+          </div>
+          <div className="cvRecordItemContent_date">
+            {cvRecordLabels[0].date}
+          </div>
+        </div>
       </div>
-      </div> 
+    </div> 
       
     
     
@@ -742,7 +767,7 @@ class App extends React.Component {
         <div id="leftMenu">
           <div className="labelAndButtonHolder">
             <div className="yourCVLabel">
-                your CV
+                your CV base
             </div>
             <div className="plusButtonBox">      
               <ThemeProvider theme={theme}>
