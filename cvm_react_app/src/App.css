@@ -130,12 +130,10 @@ body {
 }
 
 .cvRecordFrame {
-  position: absolute; 
+  
   width: 180px; 
   height: 80px;
   background-color: rgba(252, 242, 242, 1);
-  left: 20px;
-  top: 45px;  
   border-radius: 5px;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   
@@ -221,21 +219,6 @@ body {
   border-radius: 1em 2em 1em 5em;
  }
 
- .holderFrame {
-   position: relative;
-   padding-bottom: 70px;
-   border: 5px solid rgb(216, 42, 42);
-   
- }
- .leftMenuHolder {
-   position: absolute;
-   height: 500px;
-   left: 10px;
-   top: 100px;
-   width: 240px;
-   border: 5px solid black;
- }
-
 .leftMenu {
   position: absolute;
   height: 100%;
@@ -245,20 +228,7 @@ body {
   top: 0px;
   border: 3px solid rgb(137, 211, 19);
 }
-.titleBox {
-  position: absolute;
-  height: 35px;
-  width: 173px;
-  border-radius: 5.5px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #007CA5;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4.5px;
-  
-}
+
 .cvRecordsList {
   display: flex;
   flex-direction: column;
@@ -349,8 +319,44 @@ body {
   flex-direction: row;
   border: 1px solid red;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .color {
   background-color: #d41274;
+}
+
+.plusButtonCustomisation {
+  border-radius: 15px;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  width: 35px;
+  height: 35px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+}
+
+.plusButtonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recordsBox {
+  border: 1px solid red;
+  height: auto;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.recordsBoxHolder {
+  padding: 5px;
 }

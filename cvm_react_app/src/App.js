@@ -61,21 +61,6 @@ const theme = createMuiTheme({
     tonalOffset: 0.2,
 });
 
-const plusTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#d41274',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#d41274',
-      contrastText: '#fff',
-    },
-  },
-    contrastThreshold: 3,
-    tonalOffset: 0.2,
-});
-
 theme.overrides = {
   ...theme.overrides,
   MuiButton: {
@@ -89,7 +74,6 @@ theme.overrides = {
 function CvRecordItem (props) {
   
   return (
-  <div className="holderFrame">
   <div className="cvRecordFrame">
     <div className="cvRecordItemContent">
       <div className="cvRecordItemContent_title">
@@ -115,8 +99,20 @@ function CvRecordItem (props) {
     </div>
   </div>
   
-  </div> 
+  
   )
+}
+
+function CvRecordItemTest (props) {
+  return (
+    <div className="recordsBoxHolder">
+      <div className="cvRecordFrame">
+      </div>
+      </div> 
+      
+    
+    
+    )
 }
 function LeftMenu (props) {
   const cvListDataPack = [
@@ -153,13 +149,11 @@ function LeftMenu (props) {
   if (leftMenuVisibility) {
     
     return (
-      <div className="leftMenuHolder">
+      <div >
         
           <div className="closeBar" onClick={function ele () {alert("hej")}}>o</div>
           <div className="leftMenu">
-            <div className="titleBox">
-              CV list
-            </div>
+            
               <div className="cvRecordsList">
                 {cvItem}
                 
@@ -717,6 +711,7 @@ class App extends React.Component {
   }
   render () {
     const { classes } = this.props;
+   
     return  (
       <div class="container">
 
@@ -749,10 +744,23 @@ class App extends React.Component {
             <div className="yourCVLabel">
                 your CV
             </div>
-            <div>+
-              
+            <div className="plusButtonBox">      
+              <ThemeProvider theme={theme}>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  class="plusButtonCustomisation MuiButtonBase-root  MuiButton-contained MuiButton-containedPrimary"
+                >  +
+                </Button>    
+              </ThemeProvider>
             </div>
           </div>
+
+          <div className="recordsBox">
+            <CvRecordItemTest></CvRecordItemTest>
+            <CvRecordItemTest></CvRecordItemTest>
+          </div>
+
         </div>
         <div id="middleMenu">middle Menu</div>
         <div id="rightMenu">right Menu</div>
