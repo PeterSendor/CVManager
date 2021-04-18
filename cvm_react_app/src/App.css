@@ -361,3 +361,15 @@ body {
 .recordsBoxHolder {
   padding: 5px;
 }
+.addCvRequestBox {
+  position: absolute; 
+  height: 200px; 
+  width: 300px; 
+  border: 1px solid rgba(212, 21, 116, 1);
+  background-color: white;
+  padding: 15px;
+}
+.addCvFormBox {
+  padding: 10px;
+  border: 2px solid red;
+}

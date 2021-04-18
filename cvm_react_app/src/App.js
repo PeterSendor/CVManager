@@ -103,40 +103,55 @@ function CvRecordItem (props) {
   )
 }
 
-function CvRecordItemTest (props) {
+function CvRecordItems (props) {
+
   const cvRecordLabels = [{
+    title: "Project Manager", 
+    company: "comp2",
+    date: "20.02.2020"
+    }, 
+    {
+    title: "Project Manager", 
+    company: "comp1",
+    date: "20.02.2020"
+    }, 
+    {
     title: "Project Manager", 
     company: "comp1",
     date: "20.02.2020"
     }]
+
+    const cvRecordsFullList = cvRecordLabels.map((record) => {
+      return (
+        <div className="recordsBoxHolder">
+        <div className="cvRecordFrame">
+          <div className="cvRecordItemX">
+          x
+          </div>
+          <div className="cvRecordItemC">
+          c
+          </div>
+          <div className="cvRecordItemContent">
+            <div className="cvRecordItemIndicator"></div>
+            <div className="cvRecordItemContent_title">
+              {record.title}
+            </div>
+            <div className="cvRecordItemContent_company">
+              {record.company}
+            </div>
+            <div className="cvRecordItemContent_date">
+              {record.date}
+            </div>
+          </div>
+        </div>
+      </div> 
+      )
+    })
     
 
   return (
-    <div className="recordsBoxHolder">
-      <div className="cvRecordFrame">
-        <div className="cvRecordItemX">
-        x
-        </div>
-        <div className="cvRecordItemC">
-        c
-        </div>
-        <div className="cvRecordItemContent">
-          <div className="cvRecordItemIndicator"></div>
-          <div className="cvRecordItemContent_title">
-            {cvRecordLabels[0].title}
-          </div>
-          <div className="cvRecordItemContent_company">
-            {cvRecordLabels[0].company}
-          </div>
-          <div className="cvRecordItemContent_date">
-            {cvRecordLabels[0].date}
-          </div>
-        </div>
-      </div>
-    </div> 
+    <div>{cvRecordsFullList}</div>
       
-    
-    
     )
 }
 function LeftMenu (props) {
@@ -409,6 +424,62 @@ function LoginTextAreas (props) {
 }
 
 }
+function AddCvRequestBox (props) {
+
+  const submitCVRecord = (e) => {
+    
+  }
+
+  return (
+    <div 
+      className="addCvRequestBox" 
+      style={{left: props.positionX + 20 +'px', top: props.positionY + 20 +'px'}}>
+
+        <label >Position</label><br />
+        <input 
+          type="text" 
+          id="position" 
+          name="position" 
+          value={props.positionName}
+          onChange={props.onChangePosition}>
+        </input>
+        <br /><br />
+
+        <label >Company</label><br />
+        <input 
+          type="text" 
+          id="company" 
+          name="company" 
+          value={props.companyName} 
+          onChange={props.onChangeCompany}>
+          </input>
+        <br /><br />
+
+        <input type="submit" value="Submit" onClick={props.onClick}
+        >
+
+        </input>
+ 
+    </div>
+  )
+}
+function PlusButton (props) {
+
+  return (
+
+  <div className="plusButtonBox">      
+              <ThemeProvider theme={theme}>
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  class="plusButtonCustomisation MuiButtonBase-root  MuiButton-contained MuiButton-containedPrimary"
+                  onClick={props.onClick}
+                >  +
+                </Button>    
+              </ThemeProvider>
+            </div>
+  )
+}
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -430,7 +501,15 @@ class App extends React.Component {
       passwordDBCheckPrompt: 'provided passwords are not equal or password not provided', 
       passwordDBCheckError: true, 
       welcomeName: "Piotr", 
-      welcomeSurname: "Sendor"
+      welcomeSurname: "Sendor",
+      addCVRequestBox: 0, 
+      addCVRequestBoxPositionX: null,
+      addCVRequestBoxPositionY: null, 
+
+      submitNewCVPosition: "i.e.: Project Manager", 
+      submitNewCVCompany: "i.e.: Utility Warehouse", 
+      submitNewCVTime: null
+
       
     };
   }
@@ -446,6 +525,41 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.callApi(); 
+  }
+
+  handleNewCVBoxPosition = (e) => {
+    this.setState({
+      submitNewCVPosition: e.target.value
+    })
+  }
+  handleNewCVBoxCompany = (e) => {
+    this.setState({
+      submitNewCVCompany: e.target.value
+    })
+  }
+  handleNewCVSubmitButton = () => {
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+
+    this.setState({
+      submitNewCVTime: date + "." + month + "." + year
+    })
+
+    
+
+  }
+  handleAddCVRecordButton = (e) => {
+    const positionX = e.target.getBoundingClientRect().left
+    const positionY = e.target.getBoundingClientRect().top
+
+    this.setState({
+      addCVRequestBoxPositionX: positionX, 
+      addCVRequestBoxPositionY: positionY, 
+      addCVRequestBox: 1
+
+    })
   }
   handleRegisterInput = (e) => {
     const register_copy = this.state.register; 
@@ -680,6 +794,7 @@ class App extends React.Component {
             } else {
               fillWelcomeNames(body.name, body.surname)
               console.log(body)
+              alert("logged!")
             }
             
             
@@ -769,21 +884,13 @@ class App extends React.Component {
             <div className="yourCVLabel">
                 your CV base
             </div>
-            <div className="plusButtonBox">      
-              <ThemeProvider theme={theme}>
-                <Button 
-                  variant="contained" 
-                  color="primary"
-                  class="plusButtonCustomisation MuiButtonBase-root  MuiButton-contained MuiButton-containedPrimary"
-                >  +
-                </Button>    
-              </ThemeProvider>
-            </div>
+            <PlusButton
+              onClick = {this.handleAddCVRecordButton}
+            />
           </div>
 
           <div className="recordsBox">
-            <CvRecordItemTest></CvRecordItemTest>
-            <CvRecordItemTest></CvRecordItemTest>
+            <CvRecordItems></CvRecordItems>
           </div>
 
         </div>
@@ -791,6 +898,19 @@ class App extends React.Component {
         <div id="rightMenu">right Menu</div>
 
         <div id="externalWindows">
+          {this.state.addCVRequestBox === 1 ? 
+          <AddCvRequestBox 
+            positionX = {this.state.addCVRequestBoxPositionX}
+            positionY = {this.state.addCVRequestBoxPositionY}
+            positionName = {this.state.submitNewCVPosition}
+            companyName = {this.state.submitNewCVCompany}
+            onChangePosition = {this.handleNewCVBoxPosition}
+            onChangeCompany = {this.handleNewCVBoxCompany}
+            onClick = {this.handleNewCVSubmitButton}
+            
+          /> 
+          : <div></div>
+          }
 
           { this.state.loginBox === 1 ? null : 
             <div>
