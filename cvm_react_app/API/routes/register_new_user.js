@@ -29,7 +29,7 @@ router.post ('/', function (req, res) {
             res.send({info: "Sorry! Provided username already exists, please choose another login"})
 
         } else {
-            console.log("else launched")
+            
             let values = [req.body.userDataPack];
             console.log(values[0]) 
 

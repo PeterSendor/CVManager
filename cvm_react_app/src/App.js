@@ -502,6 +502,7 @@ class App extends React.Component {
       passwordDBCheckError: true, 
       welcomeName: "Piotr", 
       welcomeSurname: "Sendor",
+      currentUserId: null,
       addCVRequestBox: 0, 
       addCVRequestBoxPositionX: null,
       addCVRequestBoxPositionY: null, 
@@ -538,28 +539,56 @@ class App extends React.Component {
     })
   }
   handleNewCVSubmitButton = () => {
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
+
+      let newDate = new Date();
+      let date = newDate.getDate();
+      let month = newDate.getMonth() + 1;
+      let year = newDate.getFullYear();
+
+      let finalDate = date + "." + month + "." + year; 
 
     this.setState({
-      submitNewCVTime: date + "." + month + "." + year
-    })
+      submitNewCVTime: finalDate
+    }, submitNewCV)
 
-    
+    function submitNewCV () {
+      const newCVDataPack = {
+        corresponding_user: this.state.currentUserId, 
+        position: this.state.submitNewCVPosition, 
+        company: this.state.submitNewCVCompany, 
+        time: this.state.submitNewCVTime
+      }
+  
+      const requestOptions = {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }, body: JSON.stringify(newCVDataPack)
+      }
+      
+      fetch('http://localhost:4000/newCVrecord', requestOptions)
+      .then(response => response.json())
+      
+
+    }
 
   }
   handleAddCVRecordButton = (e) => {
     const positionX = e.target.getBoundingClientRect().left
     const positionY = e.target.getBoundingClientRect().top
 
-    this.setState({
-      addCVRequestBoxPositionX: positionX, 
-      addCVRequestBoxPositionY: positionY, 
-      addCVRequestBox: 1
+    if (this.state.currentUserId !== null) {
+      this.setState({
+        addCVRequestBoxPositionX: positionX, 
+        addCVRequestBoxPositionY: positionY, 
+        addCVRequestBox: 1
+  
+      })
+    } else {
+      alert("please login first")
+    }
 
-    })
   }
   handleRegisterInput = (e) => {
     const register_copy = this.state.register; 
@@ -752,10 +781,11 @@ class App extends React.Component {
     checkAllFormErrors()
 
       
-  let fillWelcomeNames = (name, surname) => {
+  let fillWelcomeNames = (name, surname, id) => {
     this.setState({
       welcomeName: name,
       welcomeSurname: surname, 
+      currentUserId: id,
       recognisedUser: 1, 
       loginBox: 1
     })
@@ -792,7 +822,7 @@ class App extends React.Component {
             if (body.info) {
               alert(body.info)
             } else {
-              fillWelcomeNames(body.name, body.surname)
+              fillWelcomeNames(body.name, body.surname, body.id)
               console.log(body)
               alert("logged!")
             }

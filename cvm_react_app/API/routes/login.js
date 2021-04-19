@@ -30,7 +30,7 @@ router.post ('/', function (req, res) {
             res.send ({info: "No such login/password. Please try again"})
         } else {
             res.send({
-                id: result[0].id, 
+                id: result[0].user_id, 
                 name: result[0].name,
                 surname: result[0].surname
             })

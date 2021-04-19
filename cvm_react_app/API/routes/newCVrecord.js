@@ -19,25 +19,13 @@ connection.connect();
 
 router.post ('/', function (req, res) {
     
-    let userLogin = req.body.login;
-    let userPassword = req.body.password; 
+let newCVdataPack = [req.body.corresponding_user, req.body.position, req.body.company, req.body.time]; 
+console.log("log"+JSON.stringify(newCVdataPack))
 
-    connection.query ('select * from users where login = ? and password = ?', [userLogin, userPassword], function (err, result) {
-        if (err) throw err; 
-        console.log(result[0])
-
-        if (result[0] === undefined) {
-            res.send ({info: "No such login/password. Please try again"})
-        } else {
-            res.send({
-                id: result[0].id, 
-                name: result[0].name,
-                surname: result[0].surname
-            })
-        }
-        
-
-    })
+connection.query ('INSERT INTO cv_records (corresponding_user, position, company, time) VALUES (?)', [newCVdataPack], function (err, result) {
+    if (err) throw err;
+    console.log(result);
+})
 
 })
 
