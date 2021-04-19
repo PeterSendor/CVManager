@@ -15,9 +15,9 @@ connection.connect();
 
 router.post("/", function(req, res){
   
-  var q = 'SELECT * FROM users'
+  var q = 'SELECT * FROM cv_records WHERE corresponding_user = ?'
   
-  connection.query(q, function (error, results,  
+  connection.query(q, [req.body.userId], function (error, results,  
     fields) {
       if (error) throw error;
       else {

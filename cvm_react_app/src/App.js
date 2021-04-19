@@ -105,21 +105,7 @@ function CvRecordItem (props) {
 
 function CvRecordItems (props) {
 
-  const cvRecordLabels = [{
-    title: "Project Manager", 
-    company: "comp2",
-    date: "20.02.2020"
-    }, 
-    {
-    title: "Project Manager", 
-    company: "comp1",
-    date: "20.02.2020"
-    }, 
-    {
-    title: "Project Manager", 
-    company: "comp1",
-    date: "20.02.2020"
-    }]
+  const cvRecordLabels = props.cvRecordsData;
 
     const cvRecordsFullList = cvRecordLabels.map((record) => {
       return (
@@ -509,25 +495,37 @@ class App extends React.Component {
 
       submitNewCVPosition: "i.e.: Project Manager", 
       submitNewCVCompany: "i.e.: Utility Warehouse", 
-      submitNewCVTime: null
+      submitNewCVTime: null,
+
+      cvRecords: [{
+        title: "Project Manager", 
+        company: "comp2",
+        date: "20.02.2020"
+        }, 
+        {
+        title: "Project Manager", 
+        company: "comp1",
+        date: "20.02.2020"
+        }]
 
       
     };
   }
 
   callApi = () => {
-    fetch("http://localhost:4000")
+
+      fetch("http://localhost:4000")
       .then(res => res.json())
       .then(res => {
-        console.log(res.data.length)
-        
+        console.log(res)
       })
-      
-  }
+    }
   componentDidMount() {
     this.callApi(); 
   }
-
+  downloadDatabase = () => {
+    alert("getting database")
+  }
   handleNewCVBoxPosition = (e) => {
     this.setState({
       submitNewCVPosition: e.target.value
@@ -539,7 +537,6 @@ class App extends React.Component {
     })
   }
   handleNewCVSubmitButton = () => {
-
       let newDate = new Date();
       let date = newDate.getDate();
       let month = newDate.getMonth() + 1;
@@ -569,6 +566,15 @@ class App extends React.Component {
       
       fetch('http://localhost:4000/newCVrecord', requestOptions)
       .then(response => response.json())
+      .then((body) => {
+        this.setState({
+          addCVRequestBox: 0
+        })
+        alert(body.info)
+      })
+      .catch((error) => {
+        alert("ups, something went wrong. Please try again")
+      })
       
 
     }
@@ -781,15 +787,15 @@ class App extends React.Component {
     checkAllFormErrors()
 
       
-  let fillWelcomeNames = (name, surname, id) => {
-    this.setState({
-      welcomeName: name,
-      welcomeSurname: surname, 
-      currentUserId: id,
-      recognisedUser: 1, 
-      loginBox: 1
-    })
-  }
+    let fillWelcomeNames = (name, surname, id) => {
+      this.setState({
+        welcomeName: name,
+        welcomeSurname: surname, 
+        currentUserId: id,
+        recognisedUser: 1, 
+        loginBox: 1
+      })
+    }
 
     {/* when in login mode*/}
     if (this.state.loginButton === 1) {
@@ -804,9 +810,6 @@ class App extends React.Component {
         {/* if login anf password are present - send POST*/}
 
         if (loginPack.login !== null && loginPack.password !== null) {
-          
-          console.log("wysylka: " + loginPack.login)
-
 
           const requestOptions = {
             method: 'POST', 
@@ -824,7 +827,8 @@ class App extends React.Component {
             } else {
               fillWelcomeNames(body.name, body.surname, body.id)
               console.log(body)
-              alert("logged!")
+              alert("logged as " + body.name)
+              {/*download database*/}
             }
             
             
@@ -874,7 +878,6 @@ class App extends React.Component {
     })
   }
   handleLoginButton = () => {
-    
     this.setState({
       loginBox: -this.state.loginBox
     })
@@ -920,7 +923,9 @@ class App extends React.Component {
           </div>
 
           <div className="recordsBox">
-            <CvRecordItems></CvRecordItems>
+            <CvRecordItems 
+              cvRecordsData = {this.state.cvRecords}
+            />
           </div>
 
         </div>

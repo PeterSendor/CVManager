@@ -26,7 +26,7 @@ connection.query ('INSERT INTO cv_records (corresponding_user, position, company
     if (err) throw err;
     console.log(result);
 })
-
+res.send({info: "you succesfully added a new CV record"})
 })
 
 module.exports = router;
