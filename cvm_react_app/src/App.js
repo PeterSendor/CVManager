@@ -506,10 +506,10 @@ class App extends React.Component {
         title: "Project Manager", 
         company: "comp1",
         date: "20.02.2020"
-        }]
+        }],
 
-      
-    };
+        cvRecordsTest: null
+      };
   }
 
   callApi = () => {
@@ -521,7 +521,7 @@ class App extends React.Component {
       })
     }
   componentDidMount() {
-    this.callApi(); 
+    
   }
   downloadDatabase = () => {
     alert("getting database")
@@ -797,6 +797,26 @@ class App extends React.Component {
       })
     }
 
+    let downloadDatabase = () => {
+      const requestOptionsDatabase = {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json', 
+          'Accept': 'application/json'}, 
+          body: JSON.stringify({userId: this.state.currentUserId})
+        }
+
+       {/*download database*/}
+      fetch('http://localhost:4000/getCvRecords', requestOptionsDatabase)
+      .then(response => response.json())
+      .then((body) => {
+        this.setState({
+          cvRecordsTest: body.data
+        })
+        
+      })
+    }
+
     {/* when in login mode*/}
     if (this.state.loginButton === 1) {
 
@@ -811,13 +831,13 @@ class App extends React.Component {
 
         if (loginPack.login !== null && loginPack.password !== null) {
 
-          const requestOptions = {
-            method: 'POST', 
-            headers: {
-              'Content-Type': 'application/json', 
-              'Accept': 'application/json'}, 
-              body: JSON.stringify(loginPack)
-            }
+            const requestOptions = {
+              method: 'POST', 
+              headers: {
+                'Content-Type': 'application/json', 
+                'Accept': 'application/json'}, 
+                body: JSON.stringify(loginPack)
+              }
 
           fetch('http://localhost:4000/login', requestOptions)
           .then(response => response.json())
@@ -825,10 +845,11 @@ class App extends React.Component {
             if (body.info) {
               alert(body.info)
             } else {
-              fillWelcomeNames(body.name, body.surname, body.id)
-              console.log(body)
-              alert("logged as " + body.name)
-              {/*download database*/}
+              fillWelcomeNames(body.name, body.surname, body.id);
+              console.log(body);
+              alert("logged as " + body.name);
+              downloadDatabase();
+
             }
             
             
