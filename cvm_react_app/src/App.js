@@ -104,34 +104,34 @@ function CvRecordItem (props) {
 }
 
 function CvRecordItems (props) {
-
   const cvRecordLabels = props.cvRecordsData;
 
     const cvRecordsFullList = cvRecordLabels.map((record) => {
+      if (props.userLogged === 1) {
       return (
         <div className="recordsBoxHolder">
-        <div className="cvRecordFrame">
-          <div className="cvRecordItemX">
+        <div className="cvRecordFrame" id={record.id} onClick={props.recordChecker}>
+          <div className="cvRecordItemX" onClick={props.recordDeleter}>
           x
           </div>
-          <div className="cvRecordItemC">
+          <div className="cvRecordItemC" id={record.id}>
           c
           </div>
           <div className="cvRecordItemContent">
-            <div className="cvRecordItemIndicator"></div>
+            <div className={props.currentElement == record.id ? "cvRecordItemIndicatorActive" : "cvRecordItemIndicator"}></div>
             <div className="cvRecordItemContent_title">
-              {record.title}
+              {record.position}
             </div>
             <div className="cvRecordItemContent_company">
-              {record.company}
+            {record.company}
             </div>
             <div className="cvRecordItemContent_date">
-              {record.date}
+            {record.time} 
             </div>
           </div>
         </div>
       </div> 
-      )
+      )}
     })
     
 
@@ -497,18 +497,12 @@ class App extends React.Component {
       submitNewCVCompany: "i.e.: Utility Warehouse", 
       submitNewCVTime: null,
 
-      cvRecords: [{
-        title: "Project Manager", 
-        company: "comp2",
-        date: "20.02.2020"
-        }, 
-        {
-        title: "Project Manager", 
-        company: "comp1",
-        date: "20.02.2020"
-        }],
+      cvRecordsLM: [{}], 
 
-        cvRecordsTest: null
+      currentRecord: [{
+        cvRecord: null, 
+        positionRecord: null
+      }]
       };
   }
 
@@ -521,10 +515,28 @@ class App extends React.Component {
       })
     }
   componentDidMount() {
-    
   }
-  downloadDatabase = () => {
-    alert("getting database")
+  cvRecordDeleter (e) {
+    alert("do you wan to delete record "+e.currentTarget + "?")
+  }
+  currentRecordChecker = (e) => {
+    const currentCvRecord = e.currentTarget.id; 
+    const currentPositionRecord = null; 
+
+    if (e.target.id !== "cvRecordItemX") {
+      alert(e.target.class)
+      this.setState({
+        currentRecord: [{
+          cvRecord: currentCvRecord
+          
+        }]
+      })
+    }
+
+
+    console.log(e.target)
+    console.log(e.currentTarget)
+
   }
   handleNewCVBoxPosition = (e) => {
     this.setState({
@@ -811,7 +823,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then((body) => {
         this.setState({
-          cvRecordsTest: body.data
+          cvRecordsLM: body.data
         })
         
       })
@@ -945,7 +957,11 @@ class App extends React.Component {
 
           <div className="recordsBox">
             <CvRecordItems 
-              cvRecordsData = {this.state.cvRecords}
+              cvRecordsData = {this.state.cvRecordsLM}
+              userLogged = {this.state.recognisedUser}
+              recordChecker = {this.currentRecordChecker}
+              currentElement = {this.state.currentRecord[0].cvRecord}
+              recordDeleter = {this.cvRecordDeleter}
             />
           </div>
 

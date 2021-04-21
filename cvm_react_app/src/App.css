@@ -148,6 +148,7 @@ body {
       padding-left: 5px;
   padding-left: 25px;
   padding-top: 15px;
+  cursor: pointer;
   
 }
 .cvRecordItemContent_title {
@@ -163,7 +164,7 @@ body {
   font-size: 11px;
 }
 
-.cvRecordItemIndicator {
+.cvRecordItemIndicatorActive {
   position: absolute; 
   width: 30px; 
   height: 75px;
@@ -172,7 +173,17 @@ body {
   transform: rotate(-168deg);
   left: -17px;
   top: 5px;
-  
+}
+
+.cvRecordItemIndicator {
+  position: absolute; 
+  width: 30px; 
+  height: 75px;
+  background-color:rgba(108, 112, 108, 0.72);
+  border-radius: 7px;
+  transform: rotate(-168deg);
+  left: -17px;
+  top: 5px;
 }
 
 .cvRecordItemX {
@@ -188,6 +199,24 @@ body {
     justify-content: center;
     vertical-align: center;
     font-size: x-small;
+    z-index: 999;
+}
+
+.cvRecordItemX:hover {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  background-color: rgb(134, 9, 72);
+  border-radius: 0 0.3em 0 0.3em;
+  right: -166px;
+  top: 0px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+  font-size: x-small;
+  z-index: 999;
+  cursor: pointer;
 }
 
 
@@ -204,6 +233,7 @@ body {
   justify-content: center;
   vertical-align: center;
   font-size: x-small;
+  cursor: pointer;
 }
 
 .triangle { 
